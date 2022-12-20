@@ -3,11 +3,13 @@
 //
 
 #pragma once
-
+#include "MyServer.h"
 
 // CValueServerDlg 대화 상자
 class CValueServerDlg : public CDialogEx
 {
+private:
+	MyServer m_server;
 // 생성입니다.
 public:
 	CValueServerDlg(CWnd* pParent = nullptr);	// 표준 생성자입니다.

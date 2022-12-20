@@ -184,6 +184,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="MyServer.h" />
+    <ClInclude Include="MyUser.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
@@ -191,6 +193,8 @@
     <ClInclude Include="ValueServerDlg.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MyServer.cpp" />
+    <ClCompile Include="MyUser.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
