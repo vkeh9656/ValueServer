@@ -4,8 +4,10 @@
 
 class MyUser : public CSocket
 {
+private:
+	CObList* mp_user_list;
 public:
-	MyUser();
+	MyUser(CObList *ap_user_list);
 	virtual ~MyUser();
 	virtual void OnReceive(int nErrorCode);
 	virtual void OnClose(int nErrorCode);

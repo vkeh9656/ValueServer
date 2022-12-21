@@ -6,7 +6,8 @@
 class MyServer : public CSocket
 {
 private:
-	MyUser m_user;
+	CObList m_user_list; // 부모가 CObject일때 쓰는 연결리스트
+	// MyUser m_user;
 public:
 	MyServer();
 	virtual ~MyServer();

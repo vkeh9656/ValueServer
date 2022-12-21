@@ -8,8 +8,9 @@
 
 // MyUser
 
-MyUser::MyUser()
+MyUser::MyUser(CObList *ap_user_list)
 {
+	mp_user_list = ap_user_list;
 }
 
 MyUser::~MyUser()
@@ -38,6 +39,20 @@ void MyUser::OnClose(int nErrorCode)
 
 	ShutDown(2);
 	Close();
+
+	MyUser* p = NULL;
+	POSITION pos = mp_user_list->GetHeadPosition(), check_pos;
+	while (pos != NULL)
+	{
+		check_pos = pos; // 현재 pos값 백업
+		p = (MyUser*)mp_user_list->GetNext(pos);
+		if (p == this)
+		{
+			mp_user_list->RemoveAt(check_pos);
+			break;
+		}
+	}
+	if (p != NULL) delete p;
 
 	CSocket::OnClose(nErrorCode);
 }
