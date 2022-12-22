@@ -26,6 +26,7 @@ CValueServerDlg::CValueServerDlg(CWnd* pParent /*=nullptr*/)
 void CValueServerDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_EVENT_LIST, m_event_list);
 }
 
 BEGIN_MESSAGE_MAP(CValueServerDlg, CDialogEx)

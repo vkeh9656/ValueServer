@@ -14,6 +14,11 @@ private:
 public:
 	CValueServerDlg(CWnd* pParent = nullptr);	// 표준 생성자입니다.
 
+	void AddEventString(const wchar_t* ap_string) // CString이 const wchar_t로 캐스팅되어있음
+	{
+		int index = m_event_list.InsertString(-1, ap_string); // 가장 끝에다가 ap_string을 추가하고, 그 맨끝의 인덱스를 받아옴.
+		m_event_list.SetCurSel(index);
+	}
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_VALUESERVER_DIALOG };
@@ -32,4 +37,6 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+public:
+	CListBox m_event_list;
 };

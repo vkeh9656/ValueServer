@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "ValueServer.h"
 #include "MyUser.h"
-
+#include "ValueServerDlg.h"
 
 // MyUser
 
@@ -23,12 +23,39 @@ MyUser::~MyUser()
 // 상대편이 나에게 데이터를 줬을 때 발생하는 이벤트
 void MyUser::OnReceive(int nErrorCode)
 {
-	int value;
-	Receive(&value, sizeof(int));
+	DWORD temp_size;
+	if (IOCtl(FIONREAD, &temp_size))	// 실제 수신버퍼에 데이터가 얼마나 들어있는지 확인하는 함수
+	{
 
-	AfxGetMainWnd()->SetDlgItemInt(IDC_VALUE_EDIT, value);
-	value = 1;
-	Send(&value, sizeof(int));
+		if (m_is_header)	// header 작업
+		{
+			if (temp_size >= sizeof(unsigned int))	// 4바이트 크기인지 체크해서 보냄
+			{
+				Receive(&m_data_size, sizeof(int));
+				m_is_header = !m_is_header;
+			}
+			
+		}
+		else                 // body작업
+		{
+			if (temp_size >= m_data_size)
+			{
+				char* pString = new char[m_data_size];
+				Receive(pString, m_data_size);
+
+				((CValueServerDlg*)AfxGetMainWnd())->AddEventString((wchar_t*)pString);
+				/*value = 1;
+				Send(&value, sizeof(int));*/
+
+				delete[] pString;
+				m_is_header = !m_is_header;
+			}
+		}
+	}
+	else
+	{
+		((CValueServerDlg*)AfxGetMainWnd())->AddEventString(L"수신에 문제가 있습니다.");
+	}
 
 	CSocket::OnReceive(nErrorCode);
 }

@@ -6,6 +6,9 @@ class MyUser : public CSocket
 {
 private:
 	CObList* mp_user_list;
+	char m_is_header = 1;
+	unsigned int m_data_size;
+
 public:
 	MyUser(CObList *ap_user_list);
 	virtual ~MyUser();
