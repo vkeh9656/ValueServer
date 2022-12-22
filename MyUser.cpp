@@ -40,12 +40,20 @@ void MyUser::OnReceive(int nErrorCode)
 		{
 			if (temp_size >= m_data_size)
 			{
-				char* pString = new char[m_data_size];
-				Receive(pString, m_data_size);
+				char* pString = new char[m_data_size + sizeof(unsigned int)];
+				*(int*)pString = m_data_size;
 
-				((CValueServerDlg*)AfxGetMainWnd())->AddEventString((wchar_t*)pString);
-				/*value = 1;
-				Send(&value, sizeof(int));*/
+				Receive(pString + sizeof(unsigned int), m_data_size);
+
+				((CValueServerDlg*)AfxGetMainWnd())->AddEventString((wchar_t*)(pString + sizeof(unsigned int)));
+				
+				MyUser* p = NULL;
+				POSITION pos = mp_user_list->GetHeadPosition();
+				while (pos != NULL)
+				{
+					p = (MyUser*)mp_user_list->GetNext(pos);
+					p->Send(pString, m_data_size + sizeof(unsigned int));
+				}
 
 				delete[] pString;
 				m_is_header = !m_is_header;
